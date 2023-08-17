@@ -1,7 +1,7 @@
 from fame.core.module import ProcessingModule
 
-class HelloWorld(ProcessingModule):
-    name = "HelloWorld"
+class Test(ProcessingModule):
+    name = "Test1"
     description = "output an txt"
 
     acts_on=[]#none means all type
