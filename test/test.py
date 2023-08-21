@@ -9,5 +9,6 @@ class Test(ProcessingModule):
 
 
     def each(self, target):
+        print("succeed")
         self.add_support_file("output file","test.txt")
         return True
