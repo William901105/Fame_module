@@ -12,7 +12,7 @@ except ImportError:
     HAVE_CAPA = False
 
 class FlareCapa(ProcessingModule):
-    name = 'flare_capa'
+    name = 'flare_capa_test'
     description = 'Analyze executable files using Flare Capa.'
     acts_on = ['executable']
     config = [
