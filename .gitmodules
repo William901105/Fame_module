@@ -1,0 +1,3 @@
+[submodule "flare_capa/capa"]
+	path = flare_capa/capa
+	url = https://github.com/mandiant/capa.git
