@@ -2,10 +2,10 @@ from fame.core.module import ProcessingModule
 from fame.common.exceptions import ModuleInitializationError, ModuleExecutionError
 
 try:
-    import capa.main
-    import capa.rules
-    import capa.render.result_document as rd
-    import capa.render.utils as rutils
+    import capa.capa.main
+    import capa.capa.rules
+    import capa.capa.render.result_document as rd
+    import capa.capa.render.utils as rutils
 
     HAVE_CAPA = True
 except ImportError:
