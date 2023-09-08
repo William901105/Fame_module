@@ -3,10 +3,10 @@ sys.path.append('..')
 from fame.core.module import ProcessingModule
 from fame.common.exceptions import ModuleInitializationError, ModuleExecutionError
 try:
-    from .capa import main
-    from .capa import rules
-    from .capa.render import result_document as rd
-    from .capa.render import utils as rutils
+    from fame.modules.falre_capa.capa.capa import main
+    from fame.modules.falre_capa.capa.capa import rules
+    from fame.modules.falre_capa.capa.capa.render import result_document as rd
+    from fame.modules.falre_capa.capa.capa.render import utils as rutils
 
     HAVE_CAPA = True
 except ImportError:
