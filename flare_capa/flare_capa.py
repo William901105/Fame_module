@@ -1,6 +1,7 @@
+import sys
+sys.path.append('..')
 from fame.core.module import ProcessingModule
 from fame.common.exceptions import ModuleInitializationError, ModuleExecutionError
-
 try:
     from .capa.capa import main
     from .capa.capa import rules
