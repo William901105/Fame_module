@@ -73,7 +73,7 @@ class FlareCapa(ProcessingModule):
             extractor = capa.main.get_extractor(target, "auto", "auto", capa.main.BACKEND_VIV, [], False, disable_progress=True)
             capabilities, counts = capa.main.find_capabilities(rules, extractor, disable_progress=True)
         except Exception as error:
-            raise ModuleExecutionError('Could not run capa on target with error(debug): ' + str(error) + '/rule : '+[self.rules])
+            raise ModuleExecutionError('Could not run capa on target with error(debug): ' + str(error) + '/rule : ')
 
         meta = capa.main.collect_metadata([], target, "auto", "auto",  self.rules, extractor)
         meta['analysis'].update(counts)
