@@ -9,7 +9,7 @@ class file_hash(ProcessingModule):
     def each(self, target) :
         tmpdir = tempdir()
         filepath = os.path.join(tmpdir, "hash_value.txt")
-        output = open(filepath,'w')
+        output = open(filepath,'w+')
         ###########################################################################################
         file = target # Location of the file (can be set a different way)
         BLOCK_SIZE = 65536 # The size of each read from the file
