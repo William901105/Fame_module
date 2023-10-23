@@ -1,11 +1,14 @@
 from fame.core.module import ProcessingModule
+from fame.common.utils import tempdir
 import hashlib
 
 class file_hash(ProcessingModule):
     name = 'filehash'
     description = 'calculate the hash value of the file'
     def each(self, target):
-        output = open('hash_value.txt','w')
+        tmpdir = tempdir()
+        filepath = os.path.join(tmpdir, "hash_value.txt")
+        output = open(filepath,'w')
         ###########################################################################################
         file = target # Location of the file (can be set a different way)
         BLOCK_SIZE = 65536 # The size of each read from the file
@@ -42,6 +45,6 @@ class file_hash(ProcessingModule):
                 fb = f.read(BLOCK_SIZE) # Read the next block from the file
 
         print('md5 : ',file_hash_md5.hexdigest(), file = output) # Get the hexadecimal digest of the hash        
-        self.add_support_file('Hash Value',output)
+        self.add_support_file('Hash Value',filepath)
         output.close()
         return True
