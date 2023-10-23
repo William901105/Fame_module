@@ -1,5 +1,6 @@
 from fame.core.module import ProcessingModule
 from fame.common.exceptions import ModuleInitializationError, ModuleExecutionError
+import threading  # 導入多執行緒模組
 
 try:
     import capa.main
@@ -26,6 +27,7 @@ class FlareCapa(ProcessingModule):
     def initialize(self):
         if not HAVE_CAPA:
             raise ModuleInitializationError(self, 'Missing dependency: flare-capa in submodule repo')
+        self.lock = threading.Lock()  # 創建一個同步物件
 
     def compute_layout(self, rules, extractor, capabilities):
         """
@@ -83,12 +85,14 @@ class FlareCapa(ProcessingModule):
 
         # extract all MBS behaviors
         # taken from https://github.com/mandiant/capa/blob/master/scripts/capa_as_library.py
-        if doc:
-            for rule in rutils.capability_rules(doc):
-                if not rule.meta.mbc:
-                    continue
-                for mbc in rule.meta.mbc:
-                    if mbc.objective not in self.results:
-                        self.results[mbc.objective] = []
-                    self.results[mbc.objective].append(f"{mbc.id}: {mbc.behavior}::{mbc.method}")
+        
+        with self.lock: # 使用同步物件來確保多執行緒之間的同步
+            if doc:
+                for rule in rutils.capability_rules(doc):
+                    if not rule.meta.mbc:
+                        continue
+                    for mbc in rule.meta.mbc:
+                        if mbc.objective not in self.results:
+                            self.results[mbc.objective] = []
+                        self.results[mbc.objective].append(f"{mbc.id}: {mbc.behavior}::{mbc.method}")
         return len(self.results) > 0
