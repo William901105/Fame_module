@@ -17,7 +17,7 @@ class file_hash(ProcessingModule):
                 file_hash_sha256.update(fb) # Update the hash
                 fb = f.read(BLOCK_SIZE) # Read the next block from the file
 
-        output.write('sha256 : ' , file_hash_sha256.hexdigest()) # Get the hexadecimal digest of the hash
+        print ('sha256 : ' , file_hash_sha256.hexdigest(), file = output) # Get the hexadecimal digest of the hash
         ###########################################################################################
         file = target # Location of the file (can be set a different way)
         BLOCK_SIZE = 65536 # The size of each read from the file
@@ -29,7 +29,7 @@ class file_hash(ProcessingModule):
                 file_hash_sha1.update(fb) # Update the hash
                 fb = f.read(BLOCK_SIZE) # Read the next block from the file
 
-        output.write('sha1 : ' , file_hash_sha1.hexdigest()) # Get the hexadecimal digest of the hash
+        print('sha1 : ' , file_hash_sha1.hexdigest(), file = output) # Get the hexadecimal digest of the hash
         ###########################################################################################
         file = target # Location of the file (can be set a different way)
         BLOCK_SIZE = 65536 # The size of each read from the file
@@ -41,7 +41,7 @@ class file_hash(ProcessingModule):
                 file_hash_md5.update(fb) # Update the hash
                 fb = f.read(BLOCK_SIZE) # Read the next block from the file
 
-        output.write('md5 : ',file_hash_md5.hexdigest()) # Get the hexadecimal digest of the hash        
+        print('md5 : ',file_hash_md5.hexdigest(), file = output) # Get the hexadecimal digest of the hash        
         self.add_support_file('Hash Value',output)
-        
+        output.close()
         return True
