@@ -45,8 +45,8 @@ class file_hash(ProcessingModule):
                 file_hash_md5.update(fb) # Update the hash
                 fb = f.read(BLOCK_SIZE) # Read the next block from the file
         output.writelines (['md5 : ',file_hash_md5.hexdigest()])# Get the hexadecimal digest of the hash
-        print('debug : ', output.readline())     
-        print('debug : ', filepath)   
+        print('[debug] : ', output.readline())     
+        print('[debug] : ', filepath)   
         self.add_support_file('Hash Value',filepath)
         output.close()
         return True
