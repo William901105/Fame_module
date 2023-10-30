@@ -33,7 +33,7 @@ class file_hash(ProcessingModule):
                 file_hash_sha1.update(fb) # Update the hash
                 fb = f.read(BLOCK_SIZE) # Read the next block from the file
 
-        output.writelines (['sha1 : ' , file_hash_sha1.hexdigest()])# Get the hexadecimal digest of the hash
+        output.writelines (['\nsha1 : ' , file_hash_sha1.hexdigest()])# Get the hexadecimal digest of the hash
         ###########################################################################################
         file = target # Location of the file (can be set a different way)
         BLOCK_SIZE = 65536 # The size of each read from the file
@@ -44,7 +44,7 @@ class file_hash(ProcessingModule):
             while len(fb) > 0: # While there is still data being read from the file
                 file_hash_md5.update(fb) # Update the hash
                 fb = f.read(BLOCK_SIZE) # Read the next block from the file
-        output.writelines (['md5 : ',file_hash_md5.hexdigest()])# Get the hexadecimal digest of the has
+        output.writelines (['\nmd5 : ',file_hash_md5.hexdigest()])# Get the hexadecimal digest of the has
         output.close()
         self.add_support_file('Hash Value',filepath)
         
