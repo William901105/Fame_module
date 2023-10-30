@@ -21,7 +21,7 @@ class file_hash(ProcessingModule):
                 file_hash_sha256.update(fb) # Update the hash
                 fb = f.read(BLOCK_SIZE) # Read the next block from the file
 
-        print ('sha256 : ' , file_hash_sha256.hexdigest(), file = output) # Get the hexadecimal digest of the hash
+        output.writelines (['sha256 : ' , file_hash_sha256.hexdigest()]) # Get the hexadecimal digest of the hash
         ###########################################################################################
         file = target # Location of the file (can be set a different way)
         BLOCK_SIZE = 65536 # The size of each read from the file
@@ -33,7 +33,7 @@ class file_hash(ProcessingModule):
                 file_hash_sha1.update(fb) # Update the hash
                 fb = f.read(BLOCK_SIZE) # Read the next block from the file
 
-        print('sha1 : ' , file_hash_sha1.hexdigest(), file = output) # Get the hexadecimal digest of the hash
+        output.writelines (['sha1 : ' , file_hash_sha1.hexdigest()])# Get the hexadecimal digest of the hash
         ###########################################################################################
         file = target # Location of the file (can be set a different way)
         BLOCK_SIZE = 65536 # The size of each read from the file
@@ -44,9 +44,9 @@ class file_hash(ProcessingModule):
             while len(fb) > 0: # While there is still data being read from the file
                 file_hash_md5.update(fb) # Update the hash
                 fb = f.read(BLOCK_SIZE) # Read the next block from the file
-
-        print('md5 : ',file_hash_md5.hexdigest(), file = output) # Get the hexadecimal digest of the hash
-        print('debug : ',output.readline())        
+        output.writelines (['md5 : ',file_hash_md5.hexdigest()])# Get the hexadecimal digest of the hash
+        print('debug : ', output.readline())     
+        print('debug : ', filepath)   
         self.add_support_file('Hash Value',filepath)
         output.close()
         return True
