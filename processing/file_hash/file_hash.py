@@ -7,6 +7,7 @@ class file_hash(ProcessingModule):
     name = 'filehash'
     description = 'calculate the hash value of the file'
     def each(self, target) :
+        self.results = ""
         tmpdir = tempdir()
         filepath = os.path.join(tmpdir, "hash_value.txt")
         output = open(filepath,'w+')
