@@ -5,18 +5,14 @@
             <p class="category">Detailed Results</p>
         </div>
         <div class="content">
-            {% if 'support_files' in analysis %}
-                {% if name in analysis.support_files %}
-                    <div class="footer">
-                        <hr />
-                        <div class="stats">
-                            <ul>
-                                {{support_files(name)}}
-                            </ul>
-                        </div>
-                    </div>
-                {% endif %}
-            {% endif %}
+            <div class="footer">
+                <hr />
+                <div class="stats">
+                    <ul>
+                        {{support_files(name)}}
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>
