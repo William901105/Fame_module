@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+from fame.core.module import ProcessingModule
 import logging
 import re
 import sys
