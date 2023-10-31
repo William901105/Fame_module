@@ -8,8 +8,6 @@ from argparse import ArgumentParser, RawTextHelpFormatter
 from os.path import exists
 from time import perf_counter
 
-from .__info__ import __author__, __copyright__, __email__, __license__, __source__, __version__
-from .__init__ import *
 
 class PEiDModule(ProcessingModule):
     name = 'peid_module'
