@@ -3,6 +3,7 @@ import zipfile
 import csv
 import sys
 import subprocess
+import hashlib
 # Required for paths
 import os
 class NSRL(object):
@@ -116,37 +117,82 @@ class fileintel_module(ProcessingModule) :
         else:
             return('Unknown')    
 
+    def file_hash(infile):
+        tmpdir = tempdir()
+        filepath = os.path.join(tmpdir, "hash_value.txt")
+        output = open(filepath,'w+')
+        ###########################################################################################
+        file = infile # Location of the file (can be set a different way)
+        BLOCK_SIZE = 65536 # The size of each read from the file
+
+        file_hash_sha256 = hashlib.sha256() # Create the hash object, can use something other than `.sha256()` if you wish
+        with open(file, 'rb') as f: # Open the file to read it's bytes
+            fb = f.read(BLOCK_SIZE) # Read from the file. Take in the amount declared above
+            while len(fb) > 0: # While there is still data being read from the file
+                file_hash_sha256.update(fb) # Update the hash
+                fb = f.read(BLOCK_SIZE) # Read the next block from the file
+
+        output.writelines ([file_hash_sha256.hexdigest()]) # Get the hexadecimal digest of the hash
+        ###########################################################################################
+        file = infile # Location of the file (can be set a different way)
+        BLOCK_SIZE = 65536 # The size of each read from the file
+
+        file_hash_sha1 = hashlib.sha1() # Create the hash object, can use something other than `.sha256()` if you wish
+        with open(file, 'rb') as f: # Open the file to read it's bytes
+            fb = f.read(BLOCK_SIZE) # Read from the file. Take in the amount declared above
+            while len(fb) > 0: # While there is still data being read from the file
+                file_hash_sha1.update(fb) # Update the hash
+                fb = f.read(BLOCK_SIZE) # Read the next block from the file
+
+        output.writelines ([file_hash_sha1.hexdigest()])# Get the hexadecimal digest of the hash
+        ###########################################################################################
+        file = infile # Location of the file (can be set a different way)
+        BLOCK_SIZE = 65536 # The size of each read from the file
+
+        file_hash_md5 = hashlib.md5() # Create the hash object, can use something other than `.sha256()` if you wish
+        with open(file, 'rb') as f: # Open the file to read it's bytes
+            fb = f.read(BLOCK_SIZE) # Read from the file. Take in the amount declared above
+            while len(fb) > 0: # While there is still data being read from the file
+                file_hash_md5.update(fb) # Update the hash
+                fb = f.read(BLOCK_SIZE) # Read the next block from the file
+        output.writelines ([file_hash_md5.hexdigest()])# Get the hexadecimal digest of the has
+        output.close()
+        return filepath
+
     def each(self, target):
         self.results = ""
         
-        with open(target) as infile:
+        targetfile = self.file_hash(target)
+
+        with open(targetfile) as infile:
             filehashes = infile.read().splitlines()
-        Headers = []
-        Data = []
+            Headers = []
+            Data = []
 
-        tmpdir = tempdir()
-        filepath = os.path.join(tmpdir, "fileintel.csv")
-        csvfile = open(filepath) 
-        output = csv.writer(csvfile, lineterminator='\r\n')
+            tmpdir = tempdir()
+            filepath = os.path.join(tmpdir, "fileintel.csv")
+            csvfile = open(filepath) 
+            output = csv.writer(csvfile, lineterminator='\r\n')
 
-        Headers.append('Input File')
-        Headers.append('Hash Type?')
+            Headers.append('Input File')
+            Headers.append('Hash Type?')
 
-        NSRLHashes = []
-        NSRLHashes = self.nsrl.lookup(filehashes)
-        
-        for filehash in filehashes:
-            row = []
-            row.append(filehash.upper())
-            row.append(self.typeofhash(filehash))
-            self.nsrl.add_headers(Headers)
-            self.nsrl.add_row(NSRLHashes, filehash, row)    
-            Data.append(row)
-            output.writerow(Headers)
-            try:
-                output.writerow([unicode(field).encode('utf-8') for field in row])
-            except:
-                output.writerow([str(field) for field in row])        
+            NSRLHashes = []
+            NSRLHashes = self.nsrl.lookup(filehashes)
+            
+            for filehash in filehashes:
+                row = []
+                row.append(filehash.upper())
+                row.append(self.typeofhash(filehash))
+                self.nsrl.add_headers(Headers)
+                self.nsrl.add_row(NSRLHashes, filehash, row)    
+                Data.append(row)
+                output.writerow(Headers)
+                try:
+                    output.writerow([unicode(field).encode('utf-8') for field in row])
+                except:
+                    output.writerow([str(field) for field in row])        
+            self.add_support_file('Fileintel Report',filepath)
 
 
 

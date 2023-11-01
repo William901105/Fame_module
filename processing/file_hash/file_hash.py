@@ -47,6 +47,6 @@ class file_hash(ProcessingModule):
                 fb = f.read(BLOCK_SIZE) # Read the next block from the file
         output.writelines (['\nmd5 : ',file_hash_md5.hexdigest()])# Get the hexadecimal digest of the has
         output.close()
-        self.add_support_file('Hash Value',filepath)
+        self.add_support_file('Hash Value Report',filepath)
         
         return True
